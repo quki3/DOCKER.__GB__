@@ -16,7 +16,7 @@ docker rm -f nombredelcontenedorqueestacorriendo //? frena y borra el proceso
 docker run -d --name proxy nginx //? corre el contenedor publico de nginx
 docker stop nombredelcontenedor //? frena el proceso 
 docker run -d --name proxy -p 8080:80 nginx //? - p es de publish o de port le pasamos el puerto de nuestra maquina : el puerto del contenedor
-docker logs nombredelcontenedor //? vamos a ver todos los log de las peticiones que hacemos
+docker logs nombredelcontenedor //? vamos a ver todos los log de las peticiones que hacemos y en el caso que el contenedor no este corriendo por algun problema nos mostrara una posible rason
 docker logs -f nombredelcontenedorcorriendo //? -f de follow  esto se queda escuchando 
 docker logs --tail 10 -f nombredelcontenadorcorriendo //? va a escuchar las ultimas banderas 
 docker ps //? nos muestra los contenedores corriendo 
@@ -32,7 +32,19 @@ client.containers.run
 ```
 ## conectar datos de mi maquina a un contenedor
 ```bash
-
+docker run -d --name db mongo //? esto va a correr en el background mongo 5.0 nesecita core i3 en adelante 
+docker exec -it db bash //? nos permite intereactuar 
+mongo //? este biene con el contenedor lo vamos a usar para cear una base de datos'
+use nombredelanewbasededatos //? crea una base de datos
+db.users.insert({"nombre":"guido"})//? le insertamo un dato
+exit //? salimos de la consola
+docker rm -f db //? removemos el contenedor (en este punto los datos que antes habiamos creado con mongo se perdieron cuando removimos el contenedor)
+(para conservar los datos creados con el contenedor de mongo debemos usar lo que se conose como maquina espejada)
+HACIEDO ESTA MAQUINA ESPEJADA
+mkdir mongodata //? creamos un directorio
+pwd //? copiamos la direccion de el directorio que crceamos para usarlo en el run
+docker run -d ---name db -v /direccion/deldirecctorio/creado:/data/db mongo //? -v especifica un bind mound 
+(ahora si generamos data dentro de mongo se quedara espejada en el directorio que ceamos)
 ```
  # Docker rest/api
  ```bash
