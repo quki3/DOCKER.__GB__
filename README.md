@@ -26,6 +26,7 @@ docker run --name hello-gabi hello-world //? nombra un contenedor
 docker rename hello-gabi hola-gabi //? renombra a un contenedor
 docker rm nobredelcontenedor //? elimina 
 docker container prune //? elimina todos los container apagados
+
 docker pull
 client.containers.run
 client.containers.run
@@ -45,6 +46,11 @@ mkdir mongodata //? creamos un directorio
 pwd //? copiamos la direccion de el directorio que crceamos para usarlo en el run
 docker run -d ---name db -v /direccion/deldirecctorio/creado:/data/db mongo //? -v especifica un bind mound 
 (ahora si generamos data dentro de mongo se quedara espejada en el directorio que ceamos)
+HACIENDO LO MISMO CON MOUNT CREANDO UN VOLUMEN EN VES DE UN DIRECTORIO
+docker volume ls //? vemos los vulomenes de docker
+docker volume create dbdata //? creamos un volume
+docker run -d --name db --mount src=dbdata, dst=/data/db mongo //? --mount se usa para montar un volume. src=dbdata es la ruta del volumen supongo, dst=/data/db el destino del volumen
+(esto es mas seguro ya que no hay un directorio solo  podemos entrar a ver o editar la data corriendo docker)
 ```
  # Docker rest/api
  ```bash
