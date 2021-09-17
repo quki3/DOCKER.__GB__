@@ -35,7 +35,7 @@ client.containers.run
 ```bash
 docker run -d --name db mongo //? esto va a correr en el background mongo 5.0 nesecita core i3 en adelante 
 docker exec -it db bash //? nos permite intereactuar 
-mongo //? este biene con el contenedor lo vamos a usar para cear una base de datos'
+mongo //? este biene con el contenedor lo vamos a usar para cear una base de datos
 use nombredelanewbasededatos //? crea una base de datos
 db.users.insert({"nombre":"guido"})//? le insertamo un dato
 exit //? salimos de la consola
