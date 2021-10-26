@@ -51,6 +51,8 @@ docker volume ls //? vemos los vulomenes de docker
 docker volume create dbdata //? creamos un volume
 docker run -d --name db --mount src=dbdata, dst=/data/db mongo //? --mount se usa para montar un volume. src=dbdata es la ruta del volumen supongo, dst=/data/db el destino del volumen
 (esto es mas seguro ya que no hay un directorio solo  podemos entrar a ver o editar la data corriendo docker)
+ docker cp archivoquequeremoscopiar nombredelcontenedor:/direcciondelacarpeta/nuevonombredelarchivo //copiar un archibo de local dentro de un contenedor usamos
+ docker cp nombredelcontenedor:/nombredelacarpetaenelcontenedor nombredelacarpetalocal //esto es en viseveresa
 ```
  # Docker rest/api
  ```bash
@@ -60,3 +62,11 @@ docker run -d --name db --mount src=dbdata, dst=/data/db mongo //? --mount se us
  ```bash
  
  ```
+ # cosas que no se donde ubicar 
+ copiar un archibo de local dentro de un contenedor usamos
+ ```bash
+ docker cp archivoquequeremoscopiar nombredelcontenedor:/direcciondelacarpeta/nuevonombredelarchivo
+ esto se puede hacer en viseversa
+ docker cp nombredelcontenedor:/nombredelacarpetaenelcontenedor nombredelacarpetalocal
+ ```
+ 
