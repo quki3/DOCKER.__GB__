@@ -5,6 +5,8 @@
 docker login //? nos logeamos con la cuenta de dockerhub
 docker loguot //? nos deslogueamos
 docker run //? crea un contenedor y lo ejecuta
+docker run --rm //? crea un contenedor y lo ejecuta y lo elimina cuando lo apaguemos
+docker run --rm -p 3000:3000 nombredelaimagen//?-p publicamos el puerto expuesto al local
 docker run hello-word //corre un contenedor de docker que exista en el repositorio de docker hub
 docker run ubuntu //? corre ubuntu con docker
 docker run -it ubuntu
@@ -54,6 +56,44 @@ docker run -d --name db --mount src=dbdata, dst=/data/db mongo //? --mount se us
  docker cp archivoquequeremoscopiar nombredelcontenedor:/direcciondelacarpeta/nuevonombredelarchivo //copiar un archibo de local dentro de un contenedor usamos
  docker cp nombredelcontenedor:/nombredelacarpetaenelcontenedor nombredelacarpetalocal //esto es en viseveresa
 ```
+# Docker image
+una imagen es un package de software empaquetada que tiene tdo lo neecesario para que un contenedor se ejecute ,dependencias codigo herramientas etc.
+```bash
+docker image ls //muestra las imagenes 
+docker pull nombredelaimagen:version//trae una imagen a tu maquina
+docker history nombredelaimagen //se ven las capas
+```
+para crear una imagen se parte de un docker file
+de una imagen podemos generar infinitos contenedores
+```dockerfile
+FROM ubuntu:latest
+
+RUN touch /usr/src/hola.txt
+```
+->vamos a bash para correr build
+```bash
+docker build -t nombredetag:nombredeversion . //? -t es de tag es decir el tag que le doy. el . es el contecto que va a usar build para construir
+```
+->ahora necesitamos cambiarle las credenciales 
+```bash
+docker tag nombredetag:nombredeversion usuariodedockerhub/nombredetag:nombredeversion //tag es para cambiarle el tag
+```
+# como construir con docker
+```Dockerfile
+FROM node:12
+
+COPY [".","/usr/src/"]  //?copi todo lo que hay en este directorio(.) a la ruta /usr/src/ del contenedor
+
+WORKDIR /usr/src //?en este acrchivo va a istallar
+
+RUN npm install //?instala todo lo que hay en package.json
+
+EXPOSE 3000 //? expone el puerto 3000 para que pueda ser usado desde el contenedor
+
+CMD ["node","index.js"]  //? definimos el comando por defecto que va a ejecutarce cuando corramos el contenedor
+CMD node inedx.js
+```
+
  # Docker rest/api
  ```bash
  
@@ -62,11 +102,5 @@ docker run -d --name db --mount src=dbdata, dst=/data/db mongo //? --mount se us
  ```bash
  
  ```
- # cosas que no se donde ubicar 
- copiar un archibo de local dentro de un contenedor usamos
- ```bash
- docker cp archivoquequeremoscopiar nombredelcontenedor:/direcciondelacarpeta/nuevonombredelarchivo
- esto se puede hacer en viseversa
- docker cp nombredelcontenedor:/nombredelacarpetaenelcontenedor nombredelacarpetalocal
- ```
+
  
