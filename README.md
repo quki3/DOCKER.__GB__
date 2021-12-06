@@ -1,35 +1,73 @@
 # DOCKER.__GB__
+*introduccion*
+docker permite contruir , distribuir, ejecutar cualquier aplicacion en cualquier lado mediante la virtualizacion
+- Docker usa contenedores para construir y desplegar sofware
+- reutilizan el kernel del sistema operativo
+- contenedor es una maquina virtual mas liviana esta aislada 
+
+*instalacion*
+- `Docker.com/get-started`>donwload
+- crear una cuenta en docker hub
+
+*estructura de docker*
+```bash
+server docker daemon`los servicios de docker maneja todas las entidaddes interactua con el sistema operativo`
+        ->rest api`como cualquier rest api pero es de docker`
+            ->client docker CLI `el bash que biene por default tambien podemos instalar clientes en node python go etc que se comuniquen con la res api de docker `
+                ->CLI `maneja`  >docker`el corazon`
+                                >images`empaqueta codigo`
+                                >data volumenes `la forma en que docker nos permite acceder con seguridad al sistema de archivos de la maquina anfitriona o servidores`
+                                >network`permite comunicarse entre contenedores o con el mundo exterior`
+```
 # Docker Client
  Docker CLI
+ *codigo de salida*
+ `status (0) todo salio bien`
 ```bash
+
+docker --version `nos da la version`
+
 docker login //? nos logeamos con la cuenta de dockerhub
 docker loguot //? nos deslogueamos
-docker run //? crea un contenedor y lo ejecuta
+
+
+
+
+
+ 
+
 docker run --rm //? crea un contenedor y lo ejecuta y lo elimina cuando lo apaguemos
-docker run --rm -p 3000:3000 nombredelaimagen//?-p publicamos el puerto expuesto al local
-docker run hello-word //corre un contenedor de docker que exista en el repositorio de docker hub
-docker run ubuntu //? corre ubuntu con docker
-docker run -it ubuntu
-docker run --name alwaysup -d ubuntu tail -f /dev/null //? corre ubuntu -d hace correr en bockground el contenedor
-docker exec -it alwayup bash //? esto nos deja interactuar con el contenedor alwayup de ubuntu
+docker run --rm -p 3000:3000 nombredelaimagen `-p publicamos
+ el puerto expuesto al local corre ubuntu -d hace correr en
+ bockground el contenedor`
+docker exec -it alwayup bash`it esto nos deja interactuar
+con el contenedor alwayup de ubuntu`
 docker inspect --format `{{.State.Pid}}` alwaysup //? me da el id de la maquina nativa
 kill iddelamaquinanativa //? matamos el proceso esto va a funcionar solo en una maquina de linux
 docker rm -f nombredelcontenedorqueestacorriendo //? frena y borra el proceso
-docker rm $(docker ps -aq) //? elimina todo la lista
-docker run -d --name proxy nginx //? corre el contenedor publico de nginx
+
 docker stop nombredelcontenedor //? frena el proceso 
-docker run -d --name proxy -p 8080:80 nginx //? - p es de publish o de port le pasamos el puerto de nuestra maquina : el puerto del contenedor
+
 docker logs nombredelcontenedor //? vamos a ver todos los log de las peticiones que hacemos y en el caso que el contenedor no este corriendo por algun problema nos mostrara una posible rason
 docker logs -f nombredelcontenedorcorriendo //? -f de follow  esto se queda escuchando 
 docker logs --tail 10 -f nombredelcontenadorcorriendo //? va a escuchar las ultimas banderas 
-docker ps //? nos muestra los contenedores corriendo 
-docker ps -a //? nos muestra los que coorieron y ya se apagaron
-docker inspect conteinerID //? podemos ver iinfo de como el contenedor esta configurado
-docker run --name hello-gabi hello-world //? nombra un contenedor 
-docker rename hello-gabi hola-gabi //? renombra a un contenedor
+docker ps ` Nos muestra los contenedores corriendo `
+docker ps -a `Nos muestra los que coorieron y ya se apagaron`
+
+docker info `nos da info de docker`
+docker inspect conteinerID `Podemos ver info de como el
+contenedor esta configurado`
+
+docker run `Crea un contenedor y lo ejecuta`
+docker rm $(docker ps -aq) //? elimina todo la lista
+docker run -d --name proxy nginx //? corre el contenedor publico de nginx
+docker run -d --name proxy -p 8080:80 nginx //? - p es de publish o de port le pasamos el puerto de nuestra maquina : el puerto del contenedor
+docker run --name hello-gabi hello-world` nombra un
+ contenedor `
+docker rename hello-gabi hola-gabi `Renombra a un contenedor`
 docker rm nobredelcontenedor //? elimina 
 docker rmi $(docker images -aq) //? elimina las imagenes
-docker container prune //? elimina todos los container apagados
+docker container prune `Elimina todos los container apagados`
 
 docker pull
 client.containers.run
