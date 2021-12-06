@@ -15,6 +15,7 @@ docker exec -it alwayup bash //? esto nos deja interactuar con el contenedor alw
 docker inspect --format `{{.State.Pid}}` alwaysup //? me da el id de la maquina nativa
 kill iddelamaquinanativa //? matamos el proceso esto va a funcionar solo en una maquina de linux
 docker rm -f nombredelcontenedorqueestacorriendo //? frena y borra el proceso
+docker rm $(docker ps -aq) //? elimina todo la lista
 docker run -d --name proxy nginx //? corre el contenedor publico de nginx
 docker stop nombredelcontenedor //? frena el proceso 
 docker run -d --name proxy -p 8080:80 nginx //? - p es de publish o de port le pasamos el puerto de nuestra maquina : el puerto del contenedor
