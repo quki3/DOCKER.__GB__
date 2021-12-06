@@ -28,7 +28,7 @@ docker inspect conteinerID //? podemos ver iinfo de como el contenedor esta conf
 docker run --name hello-gabi hello-world //? nombra un contenedor 
 docker rename hello-gabi hola-gabi //? renombra a un contenedor
 docker rm nobredelcontenedor //? elimina 
-docker rm $(docker images -aq) //? elimina las imagenes
+docker rmi $(docker images -aq) //? elimina las imagenes
 docker container prune //? elimina todos los container apagados
 
 docker pull
