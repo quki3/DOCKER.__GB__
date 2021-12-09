@@ -40,6 +40,45 @@ docker --version `nos da la version`
 docker login //? nos logeamos con la cuenta de dockerhub
 docker loguot //? nos deslogueamos
 
+docker rm -f nombredelcontenedorqueestacorriendo `frena y borra el proceso`
+docker run --rm ` crea un contenedor y lo ejecuta y lo elimina cuando
+lo apaguemos`
+docker run --rm -p 3000:3000 nombredelaimagen `-p publicamos
+el puerto expuesto al local corre ubuntu -d hace correr en
+bockground el contenedor`
+docker run --name nombredelconteiner -d ubuntu tail -f /dev/null `tail -f
+algunComando nos permite correr un comando luego de levantar el contenedor `
+
+docker exec -it nombredelcontenedor bash `it esto nos deja interactuar
+con el contenedor`
+
+docker inspect --format `{{.State.Pid}}` alwaysup ` me da el id de la
+maquina nativa`
+kill iddelamaquinanativa ` matamos el proceso esto va a funcionar solo en
+una maquina de linux`
+
+docker stop nombredelcontenedor //? frena el proceso 
+
+docker logs nombredelcontenedor `vamos a ver todos los log de las peticiones
+que hacemos y en el caso que el contenedor no este corriendo por algun
+problema nos mostrara una posible razon`
+docker logs -f nombredelcontenedorcorriendo `-f de follow  esto se queda
+escuchando` 
+docker logs --tail 10 -f nombredelcontenadorcorriendo `va a escuchar las
+ultimas banderas`
+
+docker ps ` Nos muestra los contenedores corriendo `
+docker ps -a `Nos muestra los que coorieron y ya se apagaron`
+docker ps -aux `muestra todo lo que esta corriendo en el contenedor
+tambien se puede usar sin docker`
+docker container prune `Elimina todos los container apagados`
+
+docker info `nos da info de docker`
+docker inspect conteinerID `Podemos ver info de como el
+contenedor esta configurado`
+docker inspect loquequeramosinspect `info de lo que queramos`
+
+docker rm -f nombredelcontenedorqueestacorriendo `frena y borra el proceso`
 docker run --rm ` crea un contenedor y lo ejecuta y lo elimina cuando
 lo apaguemos`
 docker run --rm -p 3000:3000 nombredelaimagen `-p publicamos
@@ -47,62 +86,70 @@ el puerto expuesto al local corre ubuntu -d hace correr en
 bockground el contenedor`
 docker run --name alwaysup -d ubuntu tail -f /dev/null `tail -f
 algunComando nos permite correr un comando luego de levantar el contenedor `
-
-docker exec -it alwayup bash`it esto nos deja interactuar
-con el contenedor alwayup de ubuntu`
-docker inspect --format `{{.State.Pid}}` alwaysup //? me da el id de la maquina nativa
-kill iddelamaquinanativa //? matamos el proceso esto va a funcionar solo en una maquina de linux
-docker rm -f nombredelcontenedorqueestacorriendo //? frena y borra el proceso
-
-docker stop nombredelcontenedor //? frena el proceso 
-
-docker logs nombredelcontenedor //? vamos a ver todos los log de las peticiones que hacemos y en el caso que el contenedor no este corriendo por algun problema nos mostrara una posible rason
-docker logs -f nombredelcontenedorcorriendo //? -f de follow  esto se queda escuchando 
-docker logs --tail 10 -f nombredelcontenadorcorriendo //? va a escuchar las ultimas banderas 
-docker ps ` Nos muestra los contenedores corriendo `
-docker ps -a `Nos muestra los que coorieron y ya se apagaron`
-docker ps -aux `muestra todo lo que esta corriendo en el contenedor tambien se puede usar sin docker`
-
-docker info `nos da info de docker`
-docker inspect conteinerID `Podemos ver info de como el
-contenedor esta configurado`
-
 docker run `Crea un contenedor y lo ejecuta`
-docker rm $(docker ps -aq) //? elimina todo la lista
-docker run -d --name proxy nginx //? corre el contenedor publico de nginx
-docker run -d --name proxy -p 8080:80 nginx //? - p es de publish o de port le pasamos el puerto de nuestra maquina : el puerto del contenedor
-docker run --name hello-gabi hello-world` nombra un
- contenedor `
+docker rm $(docker ps -aq)` elimina todo la lista`
+docker run -d --name proxy nginx ` -d detach no vincula input con output lo
+hace correr en bacground) corre el contenedor publico de nginx`
+docker run -d --name proxy -p 8080:80 nginx ` - p es de publish o de port
+le pasamos el puerto de nuestra maquina : el puerto del contenedor`
+docker run --name hello-gabi hello-world` nombra un contenedor `
 docker rename hello-gabi hola-gabi `Renombra a un contenedor`
 docker rm nobredelcontenedor //? elimina 
 docker rmi $(docker images -aq) //? elimina las imagenes
-docker container prune `Elimina todos los container apagados`
+docker rm -f nombredelcontenedorqueestacorriendo `frena y borra el proceso`
+docker run --rm ` crea un contenedor y lo ejecuta y lo elimina cuando
+
+docker volume create nombredelvolume `crea un volumen`
+docker volume ls `muestra los volumen`
+docker run -d --name nombredelvolumen --mount src=nombredekvolumen, dst=/verdondemongo/guardadata mongo 
+`src=nombredb(especificar la fuente que queremos montar es decir que queremos que este disponible
+para el contenedor que vamos a correr)
+dst=/verdonde/mongogurdaddata(especificar el destino)`
 
 docker pull
 client.containers.run
 client.containers.run
 ```
-## conectar datos de mi maquina a un contenedor
-```bash
-docker run -d --name nombredeladb mongo //? esto va a correr en el background mongo 5.0 nesecita core i3 en adelante 
-docker exec -it nombredeladbdb bash //? nos permite intereactuar 
-docker exec -it nombredelaimagenmsql mysql -p //? entramos en msql si ya temenos rodando una imagen de docker de msql
-mongo //? este biene con el contenedor lo vamos a usar para cear una base de datos
-use nombredelanewbasededatos //? crea una base de datos
-db.users.insert({"nombre":"guido"})//? le insertamo un dato
-exit //? salimos de la consola
-docker rm -f db //? removemos el contenedor (en este punto los datos que antes habiamos creado con mongo se perdieron cuando removimos el contenedor)
-(para conservar los datos creados con el contenedor de mongo debemos usar lo que se conose como maquina espejada)
-HACIEDO ESTA MAQUINA ESPEJADA
-mkdir mongodata //? creamos un directorio
-pwd //? copiamos la direccion de el directorio que crceamos para usarlo en el run
-docker run -d ---name db -v /direccion/deldirecctorio/creado:/data/db mongo //? -v especifica un bind mound 
-(ahora si generamos data dentro de mongo se quedara espejada en el directorio que ceamos)
-HACIENDO LO MISMO CON MOUNT CREANDO UN VOLUMEN EN VES DE UN DIRECTORIO
-docker volume ls //? vemos los vulomenes de docker
-docker volume create dbdata //? creamos un volume
-docker run -d --name db --mount src=dbdata, dst=/data/db mongo //? --mount se usa para montar un volume. src=dbdata es la ruta del volumen supongo, dst=/data/db el destino del volumen
-(esto es mas seguro ya que no hay un directorio solo  podemos entrar a ver o editar la data corriendo docker)
+*conectar datos de mi maquina a un contenedor*
+
+- `docker run -d --name nombredeladb mongo`esto va a correr en el background
+mongo 5.0 nesecita core i3 en adelante
+
+- `docker exec -it nombredeladbdb bash` nos permite intereactuar
+
+- `mongo` es un comando que biene con el contenedor de mongo te permite
+conectarte a la base de datos
+
+- `show nombredelanasededatos` muestra las base de datos
+- `use nombredelanewbasededatos` crea una base de datos
+- `db.users.insert({"nombre":"guido"})` le insertamo un dato
+- `exit` salimos de la consola
+- `docker rm -f db` removemos el contenedor (en este punto los datos que
+antes habiamos creado con mongo se perdieron cuando removimos el contenedor)
+(para conservar los datos creados con el contenedor de mongo debemos usar
+lo que se conose como maquina/version espejada)
+
+- hacemos esta maquina/version espejada usando bymount
+- `mkdir nombredelacarpeta` creamos un directorio
+- `pwd` copiamos la direccion de el directorio que creamos para usarlo
+en el run
+- `docker run -d ---name db -v /direccion/deldirecctorio/namedirectoriocreado:
+/verdondemongo/guardaladata mongo`
+(lo que va a la isquierda de los dos puntos el la direccion en mi maquina
+y lo que va a estar a la derecha es la ruta dentro del contenedor)
+-v especifica un bind mound (ahora si generamos data dentro de mongo se
+quedara espejada en el directorio que creamos)
+
+*manejar datos con bymount creando un volumen en vez de un directorio*
+
+- `docker volume ls` vemos los vulumenes de docker
+- `docker volume create nombredelvulumen` creamos un volume
+- `docker run -d --name db --mount src=nombredelvolume,dst=/data/db mongo`
+--mount se usa para montar un volume.
+src=dbdata es la ruta del volumen supongo, 
+dst=/data/db el destino del volumen
+(esto es mas seguro ya que no hay un directorio. solo podemos entrar a ver
+o editar la data corriendo docker)
  docker cp archivoquequeremoscopiar nombredelcontenedor:/direcciondelacarpeta/nuevonombredelarchivo //copiar un archibo de local dentro de un contenedor usamos
  docker cp nombredelcontenedor:/nombredelacarpetaenelcontenedor nombredelacarpetalocal //esto es en viseveresa
 ```
