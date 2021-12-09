@@ -1,6 +1,8 @@
 # DOCKER.__GB__
+borrar gabrielbrufau borrar gabrielbrufau borrar gabrielbrufau borrar
 *introduccion*
-docker permite contruir , distribuir, ejecutar cualquier aplicacion en cualquier lado mediante la virtualizacion
+docker permite contruir , distribuir, ejecutar cualquier aplicacion en
+cualquier lado mediante la virtualizacion
 - Docker usa contenedores para construir y desplegar sofware
 - reutilizan el kernel del sistema operativo
 - contenedor es una maquina virtual mas liviana esta aislada 
@@ -11,18 +13,26 @@ docker permite contruir , distribuir, ejecutar cualquier aplicacion en cualquier
 
 *estructura de docker*
 ```bash
-server docker daemon`los servicios de docker maneja todas las entidaddes interactua con el sistema operativo`
+server docker daemon`los servicios de docker maneja todas las entidaddes
+interactua con el sistema operativo`
         ->rest api`como cualquier rest api pero es de docker`
-            ->client docker CLI `el bash que biene por default tambien podemos instalar clientes en node python go etc que se comuniquen con la res api de docker `
+            ->client docker CLI `el bash que biene por default tambien
+	    podemos instalar clientes en node python go etc que se 
+	    comuniquen con la res api de docker `
                 ->CLI `maneja`  >docker`el corazon`
                                 >images`empaqueta codigo`
-                                >data volumenes `la forma en que docker nos permite acceder con seguridad al sistema de archivos de la maquina anfitriona o servidores`
-                                >network`permite comunicarse entre contenedores o con el mundo exterior`
+                                >data volumenes `la forma en que docker
+				nos permite acceder con seguridad al
+				sistema de archivos de la maquina
+				anfitriona o servidores`
+                                >network`permite comunicarse entre
+				contenedores o con el mundo exterior`
 ```
 # Docker Client
  Docker CLI
  *codigo de salida*
- `status (0) todo salio bien`
+`status (0) todo salio bien`
+
 ```bash
 
 docker --version `nos da la version`
@@ -30,16 +40,14 @@ docker --version `nos da la version`
 docker login //? nos logeamos con la cuenta de dockerhub
 docker loguot //? nos deslogueamos
 
-
-
-
-
- 
-
-docker run --rm //? crea un contenedor y lo ejecuta y lo elimina cuando lo apaguemos
+docker run --rm ` crea un contenedor y lo ejecuta y lo elimina cuando
+lo apaguemos`
 docker run --rm -p 3000:3000 nombredelaimagen `-p publicamos
- el puerto expuesto al local corre ubuntu -d hace correr en
- bockground el contenedor`
+el puerto expuesto al local corre ubuntu -d hace correr en
+bockground el contenedor`
+docker run --name alwaysup -d ubuntu tail -f /dev/null `tail -f
+algunComando nos permite correr un comando luego de levantar el contenedor `
+
 docker exec -it alwayup bash`it esto nos deja interactuar
 con el contenedor alwayup de ubuntu`
 docker inspect --format `{{.State.Pid}}` alwaysup //? me da el id de la maquina nativa
@@ -53,6 +61,7 @@ docker logs -f nombredelcontenedorcorriendo //? -f de follow  esto se queda escu
 docker logs --tail 10 -f nombredelcontenadorcorriendo //? va a escuchar las ultimas banderas 
 docker ps ` Nos muestra los contenedores corriendo `
 docker ps -a `Nos muestra los que coorieron y ya se apagaron`
+docker ps -aux `muestra todo lo que esta corriendo en el contenedor tambien se puede usar sin docker`
 
 docker info `nos da info de docker`
 docker inspect conteinerID `Podemos ver info de como el
