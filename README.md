@@ -365,7 +365,7 @@ red como sus nombres en este caso es namedb:27017/ejm
 /*comiensa con la version del composefile*/
 version:"3.8"
 
-/*los distintos componentes que tiene nuesta app estan dentro de services*/
+/*los distintos componentes que tiene nuestra app estan dentro de services*/
 services:
 	app:
 	/*nameimagenproyecto*/
@@ -388,6 +388,74 @@ services:
 - configurado esto vamos al bash siempre dentro de la carpeta raiz del pro
 yecto dende esta el cocker-compose y corremos
 - `docker-compose up -d` levanta los contenedores y los connecta en background
+*pedirle a docker-compose que buildee o contrulla una imagen a partir de los archivos
+de mi maquina*
+```bash
+/*comiensa con la version del composefile*/
+version:"3.8"
+
+/*los distintos componentes que tiene nuestra app estan dentro de services*/
+services:
+	app:
+	/*remplazamos la imagen por un build : el contexto de build*/
+		build: . 
+	/*--env */
+			environment:
+	    			MONGO_URL:"mongodb://hostdb:27017/schema"
+	/*el servicio db nesecita ser levantado antes que app*/
+		depends_on:
+	    		- db
+	/* -p */
+		ports:
+	    		- "3000:3000"
+	
+
+	db:
+			image:mongo
+
+```
+- hecho esto hacemos `docker-compose build`
+- luego `docker-compose up -d`
+- si hacemos cambios en los archivos tenemos que hacer un buid de nuevo o `fig up -d`
+esto autoregenera el docker-compose 
+- tambien podriamos hacer `docker-compose build nameimge`
+- luego `docker-compose up -d`
+- o lo mejor es hacer un bind mont para que se guarden los cambios de mis archivos
+- vamos a docker-compose.yml
+```bash
+/*comiensa con la version del composefile*/
+version:"3.8"
+
+/*los distintos componentes que tiene nuestra app estan dentro de services*/
+services:
+	app:
+	/*remplazamos la imagen por un build : el contexto de build*/
+		build: . 
+	/*--env */
+			environment:
+	    			MONGO_URL:"mongodb://hostdb:27017/schema"
+	/*el servicio db nesecita ser levantado antes que app*/
+		depends_on:
+	    		- db
+	/* -p */
+		ports:
+	    		- "3000:3000"
+		volumes:
+			- .:/usr/src /*[+] esto hace el bind mount*/
+			- /usr/src/node_modules /*[+]con esto le digo a docker
+			que no monte nada ensima de node_modules es decir que no me 
+			lo pise*/
+		command: npx nodemon index.js /*[+] va a correr nodemon para que escuche los 
+		cambios*/
+	db:
+			image:mongo
+
+```
+- una ves configurado el volumen vamos al bash `docker-compose up -d`
+
+
+
+
 
 
 
