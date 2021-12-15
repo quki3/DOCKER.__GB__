@@ -34,7 +34,46 @@ interactua con el sistema operativo`
 `status (0) todo salio bien`
 
 ```bash
+a
+b
+c
+docker-compose ps `lista los contenedores bindeados corriendo`
+d
+docker-compose down `baja los ambientes de contenedores corriendo `
+e
+docker-compose exec nombredelservicio bash `para correr un 
+comando en un contenedor en este caso el bash`
 
+exit `sale de modo interactivo`
+
+f
+g
+h
+i
+docker network inspect nombre_de_la_Red `miramos detalles`
+j
+k
+l
+docker-compose logs `muestra los logs`
+docker-compose logs -f nameservicio `vamos a ver los logs que 
+se van generando`
+
+m
+n
+docker network ls `muestra las redes`
+
+o
+p
+q
+r
+s
+t
+u
+v
+w
+x
+y
+z
 docker --version `nos da la version`
 
 docker build -t nameofimagenquevamosacrear contectodebuild
