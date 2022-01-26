@@ -66,7 +66,9 @@ o
 p
 q
 r
-s
+s 
+ docker system prune `nos borra img vol net`
+
 t
 u
 v
@@ -453,8 +455,8 @@ services:
 ```
 - una ves configurado el volumen vamos al bash `docker-compose up -d`
 
-
-
+# resolver el tema de la colaboracion en git con docker compose cap 25
+- lo primero seria crear un `touch docker-compose.override.yml`
 
 
 
