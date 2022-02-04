@@ -1,5 +1,5 @@
 # DOCKER.__GB__
-borrar gabrielbrufau borrar gabrielbrufau borrar gabrielbrufau borrar
+
 *introduccion*
 docker permite contruir , distribuir, ejecutar cualquier aplicacion en
 cualquier lado mediante la virtualizacion
