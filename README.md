@@ -1,5 +1,5 @@
 # DOCKER.__GB__
-borrar gabrielbrufau borrar gabrielbrufau borrar gabrielbrufau borrar
+
 *introduccion*
 docker permite contruir , distribuir, ejecutar cualquier aplicacion en
 cualquier lado mediante la virtualizacion
@@ -8,7 +8,7 @@ cualquier lado mediante la virtualizacion
 - contenedor es una maquina virtual mas liviana esta aislada 
 
 *instalacion*
-- `Docker.com/get-started`>donwload
+<a href='Docker.com/get-started'>Download</a>
 - crear una cuenta en docker hub
 
 *estructura de docker*
