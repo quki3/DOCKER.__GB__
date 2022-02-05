@@ -127,10 +127,8 @@ services:
 ```diff
 services:
 	src:
-		container_name:
-			v1.00
-		image:
-			v1.00:docker-compose
+		container_name: v1.00
+		image: v1.00:docker-compose
 		build:
 			context: .
 		ports:
@@ -140,10 +138,8 @@ services:
 +		depends_on:
 +			- db
 +	db:
-+		container_name:
-+			name_conteiner_postgres
-+		image:
-+			"postgres:12"
++		container_name: name_conteiner_postgres
++		image: "postgres:12"
 +		port:
 +			- "5432:5432"
 +		environment:
@@ -151,9 +147,10 @@ services:
 +			- POSTGRES_PASSWORD=12345
 +			- POSTGRES_DB=name_db_docker_postgres
 +		volumes:
-+			- /custom/mount:/var/lib/postgresql/data
++			- nps_data:/var/lib/postgresql/data
++			- ./node_modules
 +volumes:
-+	/custom/mount: {} 
++	nps_data: {} 
 
 ```
 - `docker-compose up`
