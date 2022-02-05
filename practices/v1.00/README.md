@@ -207,7 +207,98 @@ services:
 volumes:
 	nps_data: {}
 ```
+- now go to `cd routes/users.js`
+```js
+const controllers = requiere('../controllers/users.js');
 
+const router = require('express').Router();
+
+//crud
+router
+	.get('/',controllers.getAll)
+	.get('/:id',controllers.getOne)
+	.post('/',controllers.createOne)
+	.put('/:id',controllers.updateOne)
+	.delete('/:id',controllers.deleteOne);
+
+module.exports = router;
+
+
+
+```
+- definamos los schemas en models para usarlos en los controllers
+- `cd models/users.js`
+```js
+const Sequelize = require('sequelize');
+const db = require('../utils/db.js');
+
+const User = db.define('users',{
+	id:{
+		type:Sequelize.INTEGER,
+		autoIncrement:true,
+		allowNull:false,
+		primaryKey:true
+	},
+	username:{
+		type:Sequelize.STRING,
+		allowNull:false,
+		unique:true
+	},
+	email:{
+		type:Sequelize.STRING,
+		allowNull:false
+	},
+	password:{
+		type:Sequelize.STRING,
+		allowNull:false
+	}
+});
+
+module.exports = User;
+```
+- now go to `cd controllers/users.js`
+```js
+const User = require('../models/users.js');
+
+exports.getAll = async (req,res,next)=>{
+	try{
+		const ALL = await User.findAll();
+		return res.status(200).json(ALL);
+	}catch(error){
+		return res.status(500).json(error);
+	}
+}
+```
+- now in src/index.js
+```diff
+const express = require('express');
+const app = express();
++	const sequelize = require('./utils/db.js');
++	const User = require('./models/users.js');
+
+app.use(express.json());
+app.use(express.urlencoded({extended:true});
+app.use((req,res,next)=>{
+		res.setHeader('Access-Control-Allow-Origin','*');
+		res.setHeader('Access-Control-Allow-Methods','GET','PUT','DELETE','POST');
+		next();
+});
+
+app.use('/dev',require('./routes/dev'));
++	app.use('/users',require('./routes/users'));
+
++	(async ()=>{
+try{
++	await sequelize.sync({force: false});
+console.log(`
+	server on
+	http://localhost:3001/dev/services {GET:on}`)
+app.listen(process.env.EXTERNAL_PORT || 3001)
+}catch (error){
+	console.log(error)
+}
++	})()
+```
 
 
 
