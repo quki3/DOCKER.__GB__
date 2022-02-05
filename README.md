@@ -162,6 +162,7 @@ docker run --name hello-gabi hello-world` nombra un contenedor `
 docker rename hello-gabi hola-gabi `Renombra a un contenedor`
 docker rm nobredelcontenedor //? elimina 
 docker rmi $(docker images -aq) //? elimina las imagenes
+docker rmi "imagen1" "imagen2"
 docker rm -f nombredelcontenedorqueestacorriendo `frena y borra el proceso`
 docker run --rm ` crea un contenedor y lo ejecuta y lo elimina cuando
 
