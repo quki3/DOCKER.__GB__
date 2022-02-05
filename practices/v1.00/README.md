@@ -122,3 +122,42 @@ services:
 - run in terminal `docker-compose build`
 - run in terminal `docker-compose up` levanta el contenedor
 
+- tratemos de conectar postgres
+- in docker-compose.yml
+```diff
+services:
+	src:
+		container_name:
+			v1.00
+		image:
+			v1.00:docker-compose
+		build:
+			context: .
+		ports:
+			- "3001:3001"
+		environment:
+			- EXTERNAL_PORT=3001
++		depends_on:
++			- db
++	db:
++		container_name:
++			name_conteiner_postgres
++		image:
++			"postgres:12"
++		port:
++			- "5432:5432"
++		environment:
++			- POSTGRES_USER=postgres
++			- POSTGRES_PASSWORD=12345
++			- POSTGRES_DB=name_db_docker_postgres
++		volumes:
++			- /custom/mount:/var/lib/postgresql/data
++volumes:
++	/custom/mount: {} 
+
+```
+- `docker-compose up`
+- deberia levantar el servidor y la db
+- en otra terminal podriamos interactuar con la db
+- `docker exec -it iddelcontenedordepostgres psql -U nameuserpostgres namebasedatos`
+
