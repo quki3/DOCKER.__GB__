@@ -77,21 +77,17 @@ try{
 - Go to cd v1.00 and create `touch Dockerfile`
 - `Dockerfile`
 ```Dockerfile
-FROM node:14
+FROM node:12-alpine	/*le dice la version de node que usamos*/
 
-EXPOSE 3001
+WORKDIR /src		/*en la ruta /src del contenedor*/
 
-WORKDIR /src
+COPY package.json package-lock*.json ./ 	/*copiamos los package*/
 
-RUN npm install i npm@latest -g
+RUN npm install		/*instalamos*/
 
-COPY package.json package-lock*.json ./
+COPY . .	/*copiamos todas las carpetas de . a . de docker*/
 
-RUN npm install
-
-COPY . .
-
-CMD ["node","src/index.js"]
+CMD ["node","src/index.js"]	/*lo que queremos que corra cuando levantemos el contenedor*/
 ```
 - ignoramos el node_modules con .dockerignore
 - `touch .dockerignore`
@@ -101,6 +97,28 @@ node_modules
 ```
 - en la terminal construimos la imagen parados en la carpeta donde esta el 
 Dockerfile `docker build -t v1.00 .`
-
-
+- en la terminal levantamos el contenedor `docker run -p 3001:30001 v1.00`
+- `Ctrl c` para parar el contenedor o `docker stop nameofconteiner o idconteiner`
+- usando docker-compose.yml
+- in `cd v1.00` `touch docker-compose.yml`
+```docker
+/*version del compose schema*/
+version:
+	"3.7"
+/*next,we'll define the list of services or conteiners we want to run as part of our aplication*/
+services:
+	src:
+		container_name:
+			v1.00
+		image:
+			v1.00:docker-compose
+		build:
+			context: .
+		ports:
+			- "3001:3001"
+		environment:
+			- EXTERNAL_PORT=3001
+```
+- run in terminal `docker-compose build`
+- run in terminal `docker-compose up` levanta el contenedor
 
