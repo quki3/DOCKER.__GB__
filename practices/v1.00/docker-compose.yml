@@ -10,3 +10,19 @@ services:
                         - "3001:3001"
                 environment:
                         - EXTERNAL_PORT=3001
+                depends_on:
+                        - db
+        db:
+                container_name: db_postgres
+                image: "postgres:12"
+                ports:
+                        - "5432:5432"
+                environment:
+                        - POSTGRES_USER=postgres
+                        - POSTGRES_PASSWORD=12345
+                        - POSTGRES_DB=name_db_docker_postgres
+                volumes:
+                        - nps_data:/var/lib/postgresql/data
+                        - ./node_modules
+volumes:
+        nps_data: {}

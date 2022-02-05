@@ -158,3 +158,63 @@ services:
 - en otra terminal podriamos interactuar con la db
 - `docker exec -it iddelcontenedordepostgres psql -U nameuserpostgres namebasedatos`
 
+- conectemos la db con la app
+- go to `cd utils/db.js`
+```js
+const Sequelize = require('sequelize');
+
+const sequelize = new Sequelize(
+	process.env.POSTGRES_DB,
+	process.env.POSTGRES_USER,
+	process.env.POSTGRES_PASSWORD,
+	{
+	host:process.env.POSTGRES_HOST,
+	dialect:'postgres'
+	}
+);
+module.exports = sequelize;
+```
+- ahora creamos las environment en docker-compose.yml
+```diff
+services:
+	src:
+		container_name: v1.00
+		image: v1.00:docker-compose
+		build:
+			context: .
+		ports:
+			- "3001:3001"
+		environment:
+			- EXTERNAL_PORT=3001
++			- POSTGRES_DB=db_postgres
++			- POSTGRES_USER=postgres
++			- POSTGRES_PASSWORD=12345
++			- POSTGRES_HOST=db
+		depends_on:
+			- db
+	db:
+		container_name: DB_postgres
+		image: "postgres:12"
+		port:
+			- "5432:5432"
+		environment:
+			- POSTGRES_USER=postgres
+			- POSTGRES_PASSWORD=12345
+			- POSTGRES_DB=db_postgres
+		volumes:
+			- nps_data:/var/lib/postgresql/data
+			- ./node_modules
+volumes:
+	nps_data: {}
+```
+
+
+
+
+
+
+
+
+
+
+
