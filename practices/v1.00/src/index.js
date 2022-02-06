@@ -20,11 +20,15 @@ app.use('/users',routesUsers);
 
 ( async ()=>{
 try{
-
+	await sequelize.sync({force:false});
 	console.log(`
 	# server ON 
 	http://localhost:3001/dev/services GET ON
-	http://localhost:3001/users GET OFF`);
+	http://localhost:3001/users 	GET ON
+				    	GET ON
+				    	POST ON
+					PUT ON
+					DELETE off`);
 	app.listen(3001);
 }catch (error){
 	console.error(error)
