@@ -1,32 +1,36 @@
-version: "3.7"
+version: "3.8"
 
-services:
+services:      
+        db:
+                image: "postgres:12"
+                ports:
+                        - "5432:5432"
+                environment:
+                        POSTGRES_USER: gabi
+                        POSTGRES_PASSWORD: 12345
+                        POSTGRES_DB: dbname
+                volumes:
+                        - db:/var/lib/postgresql/data
+    
         src:
                 container_name: v1.00
                 image: v1.00:docker-compose
                 build:
                         context: .
+                depends_on:
+                        - db
                 ports:
                         - "3001:3001"
                 environment:
-                        - EXTERNAL_PORT=3001
-                        - POSTGRES_DB=db_postgres
-                        - POSTGRES_USER=postgres
-                        - POSTGRES_PASSWORD=12345
-                        - POSTGRES_HOST=db
-                depends_on:
+                        DB_HOST: db
+                        DB_PORT: 5432
+                        DB_USER: gabi
+                        DB_PASSWORD: 12345
+                        DB_NAME: dbname
+                links:
                         - db
-        db:
-                container_name: db_postgres
-                image: "postgres:12"
-                ports:
-                        - "5432:5432"
-                environment:
-                        - POSTGRES_USER=postgres
-                        - POSTGRES_PASSWORD=12345
-                        - POSTGRES_DB=db_postgres
                 volumes:
-                        - nps_data:/var/lib/postgresql/data
-                        - ./node_modules
+                        - ".:/v1.00"
+                        - "/v1.00/node_modules"
 volumes:
-        nps_data: {}
+        db: {} 

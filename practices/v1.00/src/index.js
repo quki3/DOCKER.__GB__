@@ -1,6 +1,11 @@
 const express = require('express');
 const app = express();
-const routes = require('./routes/dev');
+const routesDev = require('./routes/dev');
+const routesUsers = require('./routes/users');
+const sequelize = require('./utils/db.js');
+const User = require('./models/users.js');
+
+
 app.use(express.json());			/*lee json*/
 app.use(express.urlencoded({extended:true}));	/*lee json put post*/
 
@@ -10,14 +15,18 @@ app.use((req,res,next)=>{
 	next();
 });
 
-console.log('# error 2 require a function',typeof routes);
-app.use('/dev',routes);
+app.use('/dev',routesDev);
+app.use('/users',routesUsers);
 
+( async ()=>{
 try{
+
 	console.log(`
 	# server ON 
-	http://localhost:3001/dev/services GET ON `);
-	app.listen(process.env.EXTERNAL_PORT || 3001);
+	http://localhost:3001/dev/services GET ON
+	http://localhost:3001/users GET OFF`);
+	app.listen(3001);
 }catch (error){
 	console.error(error)
 }
+})()
