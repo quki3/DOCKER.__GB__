@@ -460,8 +460,8 @@ services:
 - lo primero seria crear un `touch docker-compose.override.yml`
 
 # documentacion
-<a href="https://docs.docker.com/">Documentacion</a>
-<a href="https://github.com/rithinch/event-driven-microservices-docker-example" >microservices-with-docker</a>
+- <a href="https://docs.docker.com/">Documentacion</a>
+- <a href="https://github.com/rithinch/event-driven-microservices-docker-example" >microservices-with-docker</a>
 
 
 
